@@ -1,0 +1,43 @@
+﻿@model Vote.DAO.Voto
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Voto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DataVoto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataVoto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Funcionario.Ativo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Funcionario.Ativo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Restaurante.Endereco)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Restaurante.Endereco)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="voteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Titulo" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Funcionarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ativo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Administrador" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Modalidades">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Titulo" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Restaurantes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCategoria" Type="int" Nullable="false" />
+          <Property Name="IdModalidade" Type="int" Nullable="false" />
+          <Property Name="DistanciaMedia" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Endereco" Type="nvarchar" MaxLength="500" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ValorMedio" Type="decimal" Precision="18" Scale="9" />
+        </EntityType>
+        <EntityType Name="Votos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdRestaurante" Type="int" Nullable="false" />
+          <Property Name="IdFuncionario" Type="int" Nullable="false" />
+          <Property Name="DataVoto" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Restaurantes_Categorias">
+          <End Role="Categorias" Type="Self.Categorias" Multiplicity="1" />
+          <End Role="Restaurantes" Type="Self.Restaurantes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorias">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Restaurantes">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Restaurantes_Modalidades">
+          <End Role="Modalidades" Type="Self.Modalidades" Multiplicity="1" />
+          <End Role="Restaurantes" Type="Self.Restaurantes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modalidades">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Restaurantes">
+              <PropertyRef Name="IdModalidade" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Votos_Funcionarios">
+          <End Role="Funcionarios" Type="Self.Funcionarios" Multiplicity="1" />
+          <End Role="Votos" Type="Self.Votos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcionarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Votos">
+              <PropertyRef Name="IdFuncionario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Votos_Restaurantes">
+          <End Role="Restaurantes" Type="Self.Restaurantes" Multiplicity="1" />
+          <End Role="Votos" Type="Self.Votos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurantes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Votos">
+              <PropertyRef Name="IdRestaurante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="voteModelStoreContainer">
+          <EntitySet Name="Categorias" EntityType="Self.Categorias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Funcionarios" EntityType="Self.Funcionarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modalidades" EntityType="Self.Modalidades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Restaurantes" EntityType="Self.Restaurantes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Votos" EntityType="Self.Votos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Restaurantes_Categorias" Association="Self.FK_Restaurantes_Categorias">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="Restaurantes" EntitySet="Restaurantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Restaurantes_Modalidades" Association="Self.FK_Restaurantes_Modalidades">
+            <End Role="Modalidades" EntitySet="Modalidades" />
+            <End Role="Restaurantes" EntitySet="Restaurantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Votos_Funcionarios" Association="Self.FK_Votos_Funcionarios">
+            <End Role="Funcionarios" EntitySet="Funcionarios" />
+            <End Role="Votos" EntitySet="Votos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Votos_Restaurantes" Association="Self.FK_Votos_Restaurantes">
+            <End Role="Restaurantes" EntitySet="Restaurantes" />
+            <End Role="Votos" EntitySet="Votos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VoteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="VoteEF" annotation:LazyLoadingEnabled="false" >
+          <EntitySet Name="Restaurantes" EntityType="VoteModel.Restaurante" />
+          <EntitySet Name="Categorias" EntityType="VoteModel.Categoria" />
+          <EntitySet Name="Modalidades" EntityType="VoteModel.Modalidade" />
+          <EntitySet Name="Funcionarios" EntityType="VoteModel.Funcionario" />
+          <EntitySet Name="Votos" EntityType="VoteModel.Voto" />
+          <AssociationSet Name="FK_Restaurantes_Categorias" Association="VoteModel.FK_Restaurantes_Categorias">
+            <End Role="Categoria" EntitySet="Categorias" />
+            <End Role="Restaurante" EntitySet="Restaurantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Votos_Funcionarios" Association="VoteModel.FK_Votos_Funcionarios">
+            <End Role="Funcionario" EntitySet="Funcionarios" />
+            <End Role="Voto" EntitySet="Votos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Restaurantes_Modalidades" Association="VoteModel.FK_Restaurantes_Modalidades">
+            <End Role="Modalidade" EntitySet="Modalidades" />
+            <End Role="Restaurante" EntitySet="Restaurantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Votos_Restaurantes" Association="VoteModel.FK_Votos_Restaurantes">
+            <End Role="Restaurante" EntitySet="Restaurantes" />
+            <End Role="Voto" EntitySet="Votos" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Restaurante">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCategoria" Type="Int32" Nullable="false" />
+          <Property Name="IdModalidade" Type="Int32" Nullable="false" />
+          <Property Name="DistanciaMedia" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="Endereco" Type="String" Unicode="true" FixedLength="false" MaxLength="500" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="ValorMedio" Type="Decimal" Precision="18" Scale="9" />
+          <NavigationProperty Name="Categoria" Relationship="VoteModel.FK_Restaurantes_Categorias" FromRole="Restaurante" ToRole="Categoria" />
+          <NavigationProperty Name="Modalidade" Relationship="VoteModel.FK_Restaurantes_Modalidades" FromRole="Restaurante" ToRole="Modalidade" />
+          <NavigationProperty Name="Votos" Relationship="VoteModel.FK_Votos_Restaurantes" FromRole="Restaurante" ToRole="Voto" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Titulo" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Restaurantes" Relationship="VoteModel.FK_Restaurantes_Categorias" FromRole="Categoria" ToRole="Restaurante" />
+        </EntityType>
+        <EntityType Name="Modalidade">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Titulo" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Restaurantes" Relationship="VoteModel.FK_Restaurantes_Modalidades" FromRole="Modalidade" ToRole="Restaurante" />
+        </EntityType>
+        <EntityType Name="Funcionario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ativo" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Administrador" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Votos" Relationship="VoteModel.FK_Votos_Funcionarios" FromRole="Funcionario" ToRole="Voto" />
+        </EntityType>
+        <EntityType Name="Voto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdRestaurante" Type="Int32" Nullable="false" />
+          <Property Name="IdFuncionario" Type="Int32" Nullable="false" />
+          <Property Name="DataVoto" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Funcionario" Relationship="VoteModel.FK_Votos_Funcionarios" FromRole="Voto" ToRole="Funcionario" />
+          <NavigationProperty Name="Restaurante" Relationship="VoteModel.FK_Votos_Restaurantes" FromRole="Voto" ToRole="Restaurante" />
+        </EntityType>
+        <Association Name="FK_Restaurantes_Categorias">
+          <End Type="VoteModel.Categoria" Role="Categoria" Multiplicity="1" />
+          <End Type="VoteModel.Restaurante" Role="Restaurante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Restaurante">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Votos_Funcionarios">
+          <End Type="VoteModel.Funcionario" Role="Funcionario" Multiplicity="1" />
+          <End Type="VoteModel.Voto" Role="Voto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcionario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Voto">
+              <PropertyRef Name="IdFuncionario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Restaurantes_Modalidades">
+          <End Type="VoteModel.Modalidade" Role="Modalidade" Multiplicity="1" />
+          <End Type="VoteModel.Restaurante" Role="Restaurante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modalidade">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Restaurante">
+              <PropertyRef Name="IdModalidade" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Votos_Restaurantes">
+          <End Type="VoteModel.Restaurante" Role="Restaurante" Multiplicity="1" />
+          <End Type="VoteModel.Voto" Role="Voto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurante">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Voto">
+              <PropertyRef Name="IdRestaurante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="voteModelStoreContainer" CdmEntityContainer="VoteEF">
+    <EntitySetMapping Name="Restaurantes">
+      <EntityTypeMapping TypeName="IsTypeOf(VoteModel.Restaurante)">
+        <MappingFragment StoreEntitySet="Restaurantes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+          <ScalarProperty Name="IdModalidade" ColumnName="IdModalidade" />
+          <ScalarProperty Name="DistanciaMedia" ColumnName="DistanciaMedia" />
+          <ScalarProperty Name="Endereco" ColumnName="Endereco" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="ValorMedio" ColumnName="ValorMedio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categorias">
+      <EntityTypeMapping TypeName="IsTypeOf(VoteModel.Categoria)">
+        <MappingFragment StoreEntitySet="Categorias">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+          <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Modalidades">
+      <EntityTypeMapping TypeName="IsTypeOf(VoteModel.Modalidade)">
+        <MappingFragment StoreEntitySet="Modalidades">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+          <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Funcionarios">
+      <EntityTypeMapping TypeName="IsTypeOf(VoteModel.Funcionario)">
+        <MappingFragment StoreEntitySet="Funcionarios">
+          <ScalarProperty Name="Administrador" ColumnName="Administrador" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Votos">
+      <EntityTypeMapping TypeName="IsTypeOf(VoteModel.Voto)">
+        <MappingFragment StoreEntitySet="Votos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="IdRestaurante" ColumnName="IdRestaurante" />
+          <ScalarProperty Name="IdFuncionario" ColumnName="IdFuncionario" />
+          <ScalarProperty Name="DataVoto" ColumnName="DataVoto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

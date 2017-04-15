@@ -1,0 +1,33 @@
+﻿@model Vote.DAO.Categoria
+
+@{
+    ViewBag.Title = "Detalhes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div>
+        <h4>Categoria</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Descricao)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Titulo)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Voltar", "Index")
+    </p>

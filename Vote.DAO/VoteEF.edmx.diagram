@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c2eef1a55f004c01a40cfd17f0af05ae" Name="Diagram1" >
+        <EntityTypeShape EntityType="VoteModel.Restaurante" Width="1.5" PointX="0.875" PointY="0.875" />
+        <EntityTypeShape EntityType="VoteModel.Categoria" Width="1.5" PointX="3.375" PointY="0.875" />
+        <EntityTypeShape EntityType="VoteModel.Modalidade" Width="1.5" PointX="6" PointY="0.875" />
+        <EntityTypeShape EntityType="VoteModel.Funcionario" Width="1.5" PointX="4.75" PointY="2.75" />
+        <EntityTypeShape EntityType="VoteModel.Voto" Width="1.5" PointX="7.75" PointY="2.75" />
+        <AssociationConnector Association="VoteModel.FK_Restaurantes_Categorias" />
+        <AssociationConnector Association="VoteModel.FK_Votos_Funcionarios" />
+        <AssociationConnector Association="VoteModel.FK_Restaurantes_Modalidades" />
+        <AssociationConnector Association="VoteModel.FK_Votos_Restaurantes" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
