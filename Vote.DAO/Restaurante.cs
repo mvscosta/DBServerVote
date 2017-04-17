@@ -27,6 +27,7 @@ namespace Vote.DAO
         public string Endereco { get; set; }
         public string Nome { get; set; }
         public Nullable<decimal> ValorMedio { get; set; }
+        public bool Ativo { get; set; }
     
         public virtual Categoria Categoria { get; set; }
         public virtual Modalidade Modalidade { get; set; }

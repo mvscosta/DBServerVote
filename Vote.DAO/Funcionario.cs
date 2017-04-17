@@ -21,7 +21,7 @@ namespace Vote.DAO
         }
     
         public int Id { get; set; }
-        public string Ativo { get; set; }
+        public bool Ativo { get; set; }
         public string Nome { get; set; }
         public string Username { get; set; }
         public bool Administrador { get; set; }
