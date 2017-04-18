@@ -10,13 +10,14 @@ using Vote.DAO;
 
 namespace Vote.Controllers
 {
-    public class FuncionariosController : Controller
+    [Authorize]
+    public class FuncionariosController : BaseController
     {
-        private VoteEF db = new VoteEF();
-
+     
         // GET: Funcionarios
         public ActionResult Index()
         {
+            ViewBag.Disabled = UsuarioAdministrador() ? "" : " disabled";
             return View(db.Funcionarios.ToList());
         }
 
@@ -38,6 +39,11 @@ namespace Vote.Controllers
         // GET: Funcionarios/Create
         public ActionResult Create()
         {
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View();
+            }
             return View();
         }
 
@@ -48,6 +54,11 @@ namespace Vote.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Ativo,Nome,Username,Administrador")] Funcionario funcionario)
         {
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(funcionario);
+            }
             if (ModelState.IsValid)
             {
                 db.Funcionarios.Add(funcionario);
@@ -70,6 +81,11 @@ namespace Vote.Controllers
             {
                 return HttpNotFound();
             }
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(funcionario);
+            }
             return View(funcionario);
         }
 
@@ -80,6 +96,11 @@ namespace Vote.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Ativo,Nome,Username,Administrador")] Funcionario funcionario)
         {
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(funcionario);
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(funcionario).State = EntityState.Modified;
@@ -101,6 +122,11 @@ namespace Vote.Controllers
             {
                 return HttpNotFound();
             }
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(funcionario);
+            }
             return View(funcionario);
         }
 
@@ -110,6 +136,11 @@ namespace Vote.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Funcionario funcionario = db.Funcionarios.Find(id);
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(funcionario);
+            }
             db.Funcionarios.Remove(funcionario);
             db.SaveChanges();
             return RedirectToAction("Index");

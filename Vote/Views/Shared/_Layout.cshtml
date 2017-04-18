@@ -7,55 +7,40 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body class="container-fluid">
     <div class="navbar navbar-fixed-top " role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink(" ", "Index", "Home", null, new { @class = "navbar-brand" })
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li>
-                        @Html.ActionLink("Histórico", "Index", "Votos", new { area = "" }, null)
-                    </li>
-                    <li class="dropdown">
-                        <a> menu 1</a>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            </button>
+            <div>@Html.ActionLink(" Vote!", "Index", "Home", null, new { @class = "fa fa-cutlery navbar-brand" })</div>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav text-uppercase text-bold">
+                <li>
+                    @Html.ActionLink("Histórico", "Index", "Votos", new { area = "" }, null)
+                </li>
+
+                @if (Request.IsAuthenticated && Html.UsuarioAdministrador())
+                {
+                    <li class="dropdown text-uppercase text-bold">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Administração
+                            <span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu">
-                            <li class="dropdown-toggle">
-                                <a>sub item 1</a>
-                            </li>
-                            <li class="dropdown-toggle">
-                                <a>sub item 2</a>
-                            </li>
+                            <li>@Html.ActionLink("Restaurantes", "Index", "Restaurantes", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Categorias", "Index", "Categorias", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Modalidades", "Index", "Modalidades", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Funcionários", "Index", "Funcionarios", new { area = "" }, null)</li>
                         </ul>
                     </li>
-
-                    <li class="dropdown">
-                        <a>Administração</a>
-                        @*@if (Request.IsAuthenticated && Html.UsuarioAdministrador())
-                        {*@
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Restaurantes", "Index", "Restaurantes", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Categorias", "Index", "Categorias", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Modalidades", "Index", "Modalidades", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Funcionários", "Index", "Funcionarios", new { area = "" }, null)</li>
-                            </ul>
-                    </li>
-                    @* } *@
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+                }
+            </ul>
+            @Html.Partial("_LoginPartial")
         </div>
     </div>
 
-    <div class="container-fluid body-content">
-        <h1>@ViewBag.Title</h1>
-
+    <div class="container-fluid">
         @if ((ViewBag.Message != null) && (!String.IsNullOrEmpty(ViewBag.Message)))
         {
             <br />
@@ -72,9 +57,7 @@
 
     </div>
     <footer class="footer">
-        <div class="container-fluid">
-            <p class="text-muted">&copy; @DateTime.Now.Year - Vote! by Vinicius Costa</p>
-        </div>
+        <p class="text-muted text-right">&copy; @DateTime.Now.Year - Vote! by Vinicius Costa</p>
     </footer>
 
 

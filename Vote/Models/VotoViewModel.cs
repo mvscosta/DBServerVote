@@ -7,12 +7,12 @@ namespace Vote.Models
     {
         public new int Id { get; set; }
 
-        [DisplayFormat(DataFormatString ="dd/MM/yyyy")]
-        public new DateTime DataVoto { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public new DateTime DataVoto { get { return base.DataVoto; } set { base.DataVoto = value; } }
 
-        public new DAO.Restaurante Restaurante { get; set; }
+        public DAO.Restaurante Restaurante { get { return base.Restaurante; } set { base.Restaurante= value; } }
 
-        public new DAO.Funcionario Funcionario { get; set; }
+        public DAO.Funcionario Funcionario { get { return base.Funcionario; } set { base.Funcionario= value; } }
 
     }
 }

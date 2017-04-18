@@ -1,4 +1,17 @@
-﻿body {
+﻿a {
+    color: rgb(42, 63, 143);
+}
+
+    a:hover {
+        color: rgb(42, 63, 143);
+    }
+
+.nav > li > a:hover, .nav > li > a:focus {
+    text-decoration: none;
+    background-color: rgb(78, 167, 243);
+}
+
+body {
     padding-top: 60px;
     padding-bottom: 20px;
 }
@@ -104,7 +117,9 @@ select,
 textarea {
     /*max-width: 280px;*/
 }
-
+.text-bold {
+    font-weight: bold;
+}
 /* styles for validation helpers */
 .field-validation-error {
     color: #b94a48;
@@ -133,20 +148,33 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
-/*Logo*/
+.fa { display:inline; }
 
+/*Logo*/
+.navbar {
+    background-color: #ffffff;
+    border-color: rgb(42, 63, 143);
+    margin-left: 15px;
+    margin-right: 15px;
+    background-color: rgb(207, 229, 255);
+}
 .navbar-header {
     margin-left: 10px;
 }
 
 .navbar-brand {
-    background: url('./imagens/logo.jpg') no-repeat;
-    background-size: 114px 35px;
+    /*background: url('./images/logo.png') no-repeat;
+    background-size: 130px 35px;*/
     height: 35px;
-    margin: 5px 15px 5px 5px;
-    width: 114px;
+    width: 80px;
+    white-space: nowrap;
+    font-size: 18px;
 }
 
+.navbar-right {
+    margin-right: 0px !important;
+    background-color: rgb(78, 167, 243);
+}
 /*Footer*/
 
 html {
@@ -159,10 +187,11 @@ body {
 }
 
 .footer {
-    width: 100%;
+    margin-right: 15px;
     bottom: 0px;
+    right: 0px;
     position: absolute;
-    background-color: #555;
+    border-top: rgb(78, 167, 243);
     color: #fff;
     font-size: 70%;
     text-align: right;
@@ -173,6 +202,7 @@ body {
 }
 
 .footer > .container {
+    margin-right: 15px;
     padding-right: 15px;
     padding-left: 15px;
 }
@@ -220,32 +250,7 @@ dt {
 }
 
 .panel-heading {
-    background-color: #01aef0;
-}
-
-
-.ofertas-livecloud {
-    height: 50px;
-    padding-top: 15px;
-    border-right: 0;
-    border-left: 0;
-}
-
-.comprar-produtos {
-    position: absolute;
-    right: 20px;
-    top: -100px;
-    min-width: 260px;
-}
-
-.compra-panel {
-    position: relative;
-    z-index: 1;
-}
-
-.compra-title {
-    padding: 10px;
-    font-family: 'Lato', sans-serif;
+    background-color: rgb(78, 167, 243);
 }
 
 hr {
@@ -274,16 +279,12 @@ iframe iframe .prtgmapfooter {
     margin-right: 20px;
 }
 
-.navbar-right {
-    margin-right: -7px;
-}
-
 .btn-xs, .btn-group-xs > .btn {
     padding: 0px 6px;
 }
 
 .body-content h1 {
-    border-left: 4px solid #008cba;
+    border-left: 4px solid rgb(78, 167, 243);
     padding-left: 7px;
     margin-top: 10px;
     font-size: 20px;
@@ -300,9 +301,11 @@ iframe iframe .prtgmapfooter {
     text-overflow: ellipsis;
 }
 
+
+
 .user-name-menu {
     line-height: 15px !important;
-    background-color: #006687;
+    background-color: rgb(78, 167, 243);
     width: 250px;
 }
 
@@ -330,7 +333,7 @@ iframe iframe .prtgmapfooter {
 .breadcrumb {
     border: 0 solid #f5f5f5;
     background-color: transparent;
-    border-left: 4px solid #008cba;
+    border-left: 4px solid rgb(42, 63, 143);
     font-size: 16px;
     padding: 0 0 0 7px;
     border-radius: 0;
@@ -387,7 +390,7 @@ footer p.text-muted {
 }
 
 .panel-group .panel-heading {
-    border-bottom: 0px solid #dddddd;
+    border-bottom: 0px solid rgb(86, 177, 255);
     margin-bottom: 10px;
 }
 
@@ -412,11 +415,7 @@ footer p.text-muted {
         -webkit-transition: background-color 0s !important;
         transition: background-color 0s !important;
     }
-
-.highcharts-button {
-    cursor: pointer !important;
-}
-
+    
 /*ajuste menu terceiro nivel*/
 .dropdown-submenu {
     position: relative;
@@ -442,8 +441,6 @@ footer p.text-muted {
         height: 0;
         font-size: 8px;
         margin-top: 5px;
-        /*margin-top: 5px;
-                margin-right: -10px;*/
     }
 
     .dropdown-submenu:hover > a:after {
@@ -464,7 +461,6 @@ footer p.text-muted {
 }
 
 #modalLoading {
-    /*top: calc(50% - 120px);*/
     overflow: hidden;
 }
 
@@ -524,10 +520,6 @@ footer p.text-muted {
         /*width: inherit;*/
     }
 
-    .navbar-right {
-        margin-right: -7px;
-    }
-
     .dados-user {
         display: none;
     }
@@ -558,7 +550,7 @@ footer p.text-muted {
 
     .dados-user {
         display: block;
-        background-color: #006687;
+        background-color: rgb(78, 167, 243);
     }
 
     .fa-user-inside {
@@ -575,14 +567,12 @@ footer p.text-muted {
     }
 }
 
-
-
 .small-box {
-    border-radius: 2px;
+    border-radius: 5px;
     position: relative;
     display: block;
     margin-bottom: 20px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+    box-shadow: 0 1px 1px rgb(86, 177, 255);
     min-height: 100px;
 }
 
@@ -590,6 +580,10 @@ footer p.text-muted {
         padding: 10px;
         z-index: 1;
         position: relative;
+    }
+
+    .small-box a {
+        color: rgb(42, 63, 143);
     }
 
     .small-box > .small-box-footer {
@@ -642,7 +636,7 @@ footer p.text-muted {
         right: 20px;
         z-index: 0;
         font-size: 70px;
-        color: rgba(0, 0, 0, .15);
+        color: rgb(78, 167, 243);
     }
 
     .small-box:hover {
@@ -654,15 +648,16 @@ footer p.text-muted {
             font-size: 75px;
         }
 
-    .small-box .icon-backup {
+    .small-box .icon-vote {
         font-size: 65px;
     }
 
-    .small-box:hover .icon-backup {
+    .small-box:hover .icon-vote {
         font-size: 70px;
     }
 
     .small-box .title {
+        font-weight: bold;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -672,6 +667,14 @@ footer p.text-muted {
     text-decoration: none !important;
 }
 
+.bg-vote {
+    background-color: rgb(86, 177, 255);
+}
+
+.bg-winner {
+    color: rgb(249, 253, 255);
+    background-color: rgb(78, 167, 243);
+}
 
 .inline-block {
     display: inline-block;

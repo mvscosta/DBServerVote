@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Vote.DAO.Restaurante>
+
+@{
+    ViewBag.Title = "Restaurantes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Restaurantes</h3>
+<hr />
+<p>
+    @Html.ActionLink("Adicionar", "Create")
+</p>
+<div class="table-responsive">
+    <table class="table table-striped table-condensed table-hover">
+        <tr>
+            <th>
+                Distância média
+            </th>
+            <th>
+                Endereço
+            </th>
+            <th>
+                Nome
+            </th>
+            <th>
+                Valor médio
+            </th>
+            <th>
+                Categoria
+            </th>
+            <th>
+                Modalidade
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DistanciaMedia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Endereco)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ValorMedio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Modalidade.Descricao)
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "btn btn-xs text-warning fa fa-pencil" + ViewBag.Disabled }) |
+                    @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "btn btn-xs text-info fa fa-info" + ViewBag.Disabled }) |
+                    @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "btn btn-xs text-danger fa fa-trash" + ViewBag.Disabled })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

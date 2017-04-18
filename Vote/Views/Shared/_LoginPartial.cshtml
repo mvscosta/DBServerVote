@@ -11,7 +11,7 @@
                     </span> <br />
                 </a>
                 <ul class="dropdown-menu">
-                    <li class="dados-user">
+                    <li class="dados-user text-bold text-uppercase">
                         <a href="#" class="nome-usuario-inside">
                             @User.Identity.Name<br />
                             <span class="organizacao-nome-inside">@User.Identity.Name</span>
@@ -19,9 +19,8 @@
                     </li>
                     <li role="separator" class="divider"></li>
                     <li>
-                        @Html.ActionLink("Sair", "SignOut", "Account", new { @class="fa fa-signout"})
+                        @Html.ActionLink("Sair", "SignOut", "Account", routeValues: null, htmlAttributes: new { @class="fa fa-sign-out"})
                     </li>
-
                 </ul>
             </li>
         </ul>

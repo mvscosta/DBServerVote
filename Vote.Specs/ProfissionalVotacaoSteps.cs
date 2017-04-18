@@ -18,7 +18,7 @@ namespace Vote.Specs
         private int IdRestaurante { get; set; }
 
         [Given(@"Funcionario (.*) esta votando em (.*)")]
-        public void GivenFuncionarioestavotandoem(int idFunc, int idRest)
+        public void GivenFuncionarioestavotandoem(int idFunc, int idRest, Table table)
         {
             if (RestauranteRoles.ValidaRestaurante(_db, idRest))
                 IdRestaurante = idRest;

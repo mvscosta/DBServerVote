@@ -8,17 +8,18 @@ using System.Web;
 using System.Web.Mvc;
 using Vote.DAO;
 using Vote.Models;
+using Vote.Roles;
 
 namespace Vote.Controllers
 {
-    public class VotosController : Controller
+    [Authorize]
+    public class VotosController : BaseController
     {
-        private VoteEF db = new VoteEF();
-
         // GET: Votos
         public ActionResult Index()
         {
-            List<VotoViewModel> votos = db.Votos.Include(v => v.Funcionario).Include(v => v.Restaurante).Select(v=> new VotoViewModel() {  Funcionario = v.Funcionario, Restaurante = v.Restaurante, Id = v.Id}).ToList();
+            ViewBag.Disabled = UsuarioAdministrador() ? "" : " disabled";
+            List<VotoViewModel> votos = db.Votos.Include(v => v.Restaurante).OrderByDescending(v=>v.DataVoto).Select(v=> new VotoViewModel() { DataVoto  = v.DataVoto,Restaurante = v.Restaurante, Id = v.Id}).ToList();
             return View(votos);
         }
 
@@ -40,8 +41,7 @@ namespace Vote.Controllers
         // GET: Votos/Create
         public ActionResult Create()
         {
-            ViewBag.IdFuncionario = new SelectList(db.Funcionarios, "Id", "Ativo");
-            ViewBag.IdRestaurante = new SelectList(db.Restaurantes, "Id", "Endereco");
+            ViewBag.IdRestaurante = new SelectList(db.Restaurantes, "Id", "Nome");
             return View();
         }
 
@@ -50,17 +50,19 @@ namespace Vote.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdRestaurante,IdFuncionario,DataVoto")] Voto voto)
+        public ActionResult Create([Bind(Include = "IdRestaurante")] Voto voto)
         {
             if (ModelState.IsValid)
             {
-                db.Votos.Add(voto);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var funcionario = FuncionarioRoles.ValidaFuncionario(db, UsuarioAtual.Nome);
+                string resultado = VoteRoles.Votar(db, funcionario.Id, voto.IdRestaurante, DateTime.Now);
+
+                ModelState.AddModelError("",resultado);
+                ViewBag.IdRestaurante = new SelectList(db.Restaurantes, "Id", "Nome", voto.IdRestaurante);
+                return View(voto);
             }
 
-            ViewBag.IdFuncionario = new SelectList(db.Funcionarios, "Id", "Ativo", voto.IdFuncionario);
-            ViewBag.IdRestaurante = new SelectList(db.Restaurantes, "Id", "Endereco", voto.IdRestaurante);
+            ViewBag.IdRestaurante = new SelectList(db.Restaurantes, "Id", "Nome", voto.IdRestaurante);
             return View(voto);
         }
 
@@ -76,8 +78,13 @@ namespace Vote.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdFuncionario = new SelectList(db.Funcionarios, "Id", "Ativo", voto.IdFuncionario);
-            ViewBag.IdRestaurante = new SelectList(db.Restaurantes, "Id", "Endereco", voto.IdRestaurante);
+            ViewBag.IdRestaurante = new SelectList(db.Restaurantes, "Id", "Nome", voto.IdRestaurante);
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(voto);
+            }
+
             return View(voto);
         }
 
@@ -88,14 +95,25 @@ namespace Vote.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,IdRestaurante,IdFuncionario,DataVoto")] Voto voto)
         {
+            ViewBag.IdRestaurante = new SelectList(db.Restaurantes, "Id", "Nome", voto.IdRestaurante);
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(voto);
+            }
+
             if (ModelState.IsValid)
             {
+                if (!UsuarioAdministrador())
+                {
+                    ModelState.AddModelError("", "Usuário não possui permissão.");
+                    ViewBag.IdRestaurante = new SelectList(db.Restaurantes, "Id", "Nome");
+                    return View(voto);
+                }
                 db.Entry(voto).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdFuncionario = new SelectList(db.Funcionarios, "Id", "Ativo", voto.IdFuncionario);
-            ViewBag.IdRestaurante = new SelectList(db.Restaurantes, "Id", "Endereco", voto.IdRestaurante);
             return View(voto);
         }
 
@@ -111,6 +129,13 @@ namespace Vote.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.IdRestaurante = new SelectList(db.Restaurantes, "Id", "Nome");
+
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(voto);
+            }
             return View(voto);
         }
 
@@ -119,7 +144,14 @@ namespace Vote.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            
             Voto voto = db.Votos.Find(id);
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                ViewBag.IdRestaurante = new SelectList(db.Restaurantes, "Id", "Nome");
+                return View(voto);
+            }
             db.Votos.Remove(voto);
             db.SaveChanges();
             return RedirectToAction("Index");

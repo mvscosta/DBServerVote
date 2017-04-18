@@ -1,16 +1,17 @@
 ﻿@model IEnumerable<Vote.DAO.Modalidade>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Modalidades";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
+<h3>Modalidades</h3>
+<hr />
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Adicionar", "Create")
 </p>
-<table class="table">
+<div class="table-responsive">
+<table class="table table-striped table-condensed table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Descricao)
@@ -30,11 +31,12 @@
             @Html.DisplayFor(modelItem => item.Titulo)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "btn btn-xs text-warning fa fa-pencil" + ViewBag.Disabled }) |
+            @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "btn btn-xs text-info fa fa-info" + ViewBag.Disabled }) |
+            @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "btn btn-xs text-danger fa fa-trash" + ViewBag.Disabled })
         </td>
     </tr>
 }
 
 </table>
+    </div>

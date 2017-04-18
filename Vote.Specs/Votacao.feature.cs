@@ -93,11 +93,21 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Um profissional so pode votar uma vez por dia", ((string[])(null)));
 #line 8
 this.ScenarioSetup(scenarioInfo);
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "funcionario",
+                        "restaurante"});
+            table1.AddRow(new string[] {
+                        "1",
+                        "1"});
+            table1.AddRow(new string[] {
+                        "1",
+                        "2"});
 #line 9
- testRunner.Given("Funcionario 3 esta votando em 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 10
+ testRunner.Given("Funcionario 3 esta votando em 1", ((string)(null)), table1, "Given ");
+#line 14
  testRunner.When("Votar funcionario 3 restaurante 1 no dia \"13/04/2017 10:00:00\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 11
+#line 15
  testRunner.Then("A resposta deve ser \"Funcionário já votou hoje!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -109,13 +119,13 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void UmRestauranteNaoPodeSerRepetidoNaMesmaSemana()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Um restaurante não pode ser repetido na mesma semana", ((string[])(null)));
-#line 13
+#line 17
 this.ScenarioSetup(scenarioInfo);
-#line 14
+#line 18
  testRunner.Given("Funcionario 1 esta votando em 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 15
+#line 19
  testRunner.When("Votar funcionario 1 restaurante 1 no dia \"14/04/2017 10:00:00\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 16
+#line 20
  testRunner.Then("A resposta deve ser \"Este restaurante já foi votado esta semana!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -127,13 +137,13 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void OProfissionalPrecisaSaberOResultadoAntesDoMeioDia()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("O Profissional precisa saber o resultado antes do meio dia", ((string[])(null)));
-#line 18
+#line 22
 this.ScenarioSetup(scenarioInfo);
-#line 19
+#line 23
  testRunner.Given("Funcionario 1 esta votando em 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 20
+#line 24
  testRunner.When("Votar funcionario 1 restaurante 1 no dia \"16/04/2017 11:31:00\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 21
+#line 25
  testRunner.Then("A resposta deve ser \"Prazo de votação encerrado para o hoje. Aguardamos seu voto " +
                     "amanhã!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

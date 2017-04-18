@@ -16,7 +16,7 @@ namespace Vote.Roles
             return (db.Funcionarios.Find(idFuncionario) ?? new Funcionario() { Ativo = false }).Ativo;
         }
 
-        public static bool ValidaFuncionario(VoteEF db, string usernameFuncionario)
+        public static Funcionario ValidaFuncionario(VoteEF db, string usernameFuncionario)
         {
             if (db == null)
                 db = new VoteEF();
@@ -24,10 +24,10 @@ namespace Vote.Roles
             var func = db.Funcionarios.Where(f=>f.Username == usernameFuncionario);
 
             if (!func.Any() || func.Count() > 1)
-                return false;
+                return null;
             else
             {
-                return true;
+                return func.First();
             }
         }
 

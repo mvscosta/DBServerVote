@@ -39,6 +39,10 @@ namespace Vote
 
         // OWIN auth middleware constants
         public const string ObjectIdElement = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
+        
+        // API Scopes
+        public const string ReadTasksScope = "https://dbservervote.onmicrosoft.com/tasks/read";
+        public const string WriteTasksScope = "https://dbservervote.onmicrosoft.com/tasks/write";
 
         /*
         * Config OWIN middleware 
@@ -51,12 +55,14 @@ namespace Vote
             app.UseOpenIdConnectAuthentication(
                 new OpenIdConnectAuthenticationOptions
                 {
+                    Scope = $"{OpenIdConnectScopes.OpenId} {ReadTasksScope} {WriteTasksScope}",
+
                     MetadataAddress = String.Format(AadInstance, Tenant, DefaultPolicy),
 
                     ClientId = ClientId,
                     RedirectUri = RedirectUri,
                     PostLogoutRedirectUri = RedirectUri,
-
+                    
                     Notifications = new OpenIdConnectAuthenticationNotifications
                     {
                         RedirectToIdentityProvider = OnRedirectToIdentityProvider,
@@ -68,6 +74,7 @@ namespace Vote
                     {
                         NameClaimType = "name"
                     },
+
                 }
             );
             AntiForgeryConfig.UniqueClaimTypeIdentifier = "name";
@@ -83,11 +90,12 @@ namespace Vote
 
             if (!string.IsNullOrEmpty(policy) && !policy.Equals(DefaultPolicy))
             {
-                notification.ProtocolMessage.Scope = OpenIdConnectScopes.OpenId;
-                notification.ProtocolMessage.ResponseType = OpenIdConnectResponseTypes.IdToken;
+                //notification.ProtocolMessage.Scope = OpenIdConnectScopes.OpenId;
+                //notification.ProtocolMessage.ResponseType = OpenIdConnectResponseTypes.IdToken;
                 notification.ProtocolMessage.IssuerAddress = notification.ProtocolMessage.IssuerAddress.Replace(DefaultPolicy, policy);
             }
-
+            notification.ProtocolMessage.Scope = OpenIdConnectScopes.OpenId;
+            notification.ProtocolMessage.ResponseType = OpenIdConnectResponseTypes.IdToken;
             return Task.FromResult(0);
         }
 
@@ -134,7 +142,7 @@ namespace Vote
             ClientCredential cred = new ClientCredential(ClientSecret);
             ConfidentialClientApplication app = new ConfidentialClientApplication(authority, Startup.ClientId,
                                                     RedirectUri, cred, new NaiveSessionCache(userObjectId, httpContext));
-            var authResult = await app.AcquireTokenByAuthorizationCodeAsync(new string[] { }, code, DefaultPolicy);
+            var authResult = await app.AcquireTokenByAuthorizationCodeAsync(new string[] { ReadTasksScope, WriteTasksScope }, code, DefaultPolicy);
         }
     }
 }

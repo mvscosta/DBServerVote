@@ -10,13 +10,14 @@ using Vote.DAO;
 
 namespace Vote.Controllers
 {
-    public class CategoriasController : Controller
+    [Authorize]
+    public class CategoriasController : BaseController
     {
-        private VoteEF db = new VoteEF();
 
         // GET: Categorias
         public ActionResult Index()
         {
+            ViewBag.Disabled = UsuarioAdministrador() ? "" : " disabled";
             return View(db.Categorias.ToList());
         }
 
@@ -38,6 +39,11 @@ namespace Vote.Controllers
         // GET: Categorias/Create
         public ActionResult Create()
         {
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View();
+            }
             return View();
         }
 
@@ -48,6 +54,11 @@ namespace Vote.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Descricao,Titulo")] Categoria categoria)
         {
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(categoria);
+            }
             if (ModelState.IsValid)
             {
                 db.Categorias.Add(categoria);
@@ -70,6 +81,11 @@ namespace Vote.Controllers
             {
                 return HttpNotFound();
             }
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(categoria);
+            }
             return View(categoria);
         }
 
@@ -80,6 +96,11 @@ namespace Vote.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Descricao,Titulo")] Categoria categoria)
         {
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(categoria);
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(categoria).State = EntityState.Modified;
@@ -101,6 +122,11 @@ namespace Vote.Controllers
             {
                 return HttpNotFound();
             }
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(categoria);
+            }
             return View(categoria);
         }
 
@@ -110,6 +136,11 @@ namespace Vote.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Categoria categoria = db.Categorias.Find(id);
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(categoria);
+            }
             db.Categorias.Remove(categoria);
             db.SaveChanges();
             return RedirectToAction("Index");

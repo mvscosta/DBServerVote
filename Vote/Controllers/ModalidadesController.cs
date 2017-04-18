@@ -10,13 +10,14 @@ using Vote.DAO;
 
 namespace Vote.Controllers
 {
-    public class ModalidadesController : Controller
+    [Authorize]
+    public class ModalidadesController : BaseController
     {
-        private VoteEF db = new VoteEF();
 
         // GET: Modalidades
         public ActionResult Index()
         {
+            ViewBag.Disabled = UsuarioAdministrador() ? "" : " disabled";
             return View(db.Modalidades.ToList());
         }
 
@@ -38,6 +39,11 @@ namespace Vote.Controllers
         // GET: Modalidades/Create
         public ActionResult Create()
         {
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View();
+            }
             return View();
         }
 
@@ -48,6 +54,11 @@ namespace Vote.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Descricao,Titulo")] Modalidade modalidade)
         {
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(modalidade);
+            }
             if (ModelState.IsValid)
             {
                 db.Modalidades.Add(modalidade);
@@ -70,6 +81,11 @@ namespace Vote.Controllers
             {
                 return HttpNotFound();
             }
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(modalidade);
+            }
             return View(modalidade);
         }
 
@@ -80,6 +96,11 @@ namespace Vote.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Descricao,Titulo")] Modalidade modalidade)
         {
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(modalidade);
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(modalidade).State = EntityState.Modified;
@@ -101,6 +122,11 @@ namespace Vote.Controllers
             {
                 return HttpNotFound();
             }
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(modalidade);
+            }
             return View(modalidade);
         }
 
@@ -110,6 +136,11 @@ namespace Vote.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Modalidade modalidade = db.Modalidades.Find(id);
+            if (!UsuarioAdministrador())
+            {
+                ModelState.AddModelError("", "Usuário não possui permissão.");
+                return View(modalidade);
+            }
             db.Modalidades.Remove(modalidade);
             db.SaveChanges();
             return RedirectToAction("Index");

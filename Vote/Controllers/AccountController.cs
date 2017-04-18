@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Vote.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         /*
          *  Called when requesting to sign up or sign in

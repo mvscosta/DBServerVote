@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<Vote.Models.VotoViewModel>
 
 @{
-    ViewBag.Title = "Histórico";
+    ViewBag.Title = "Votos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Histórico</h2>
-
+<h3>Histórico</h3>
+<hr/>
 <p>
     @Html.ActionLink("Votar", "Create")
 </p>
@@ -34,9 +34,9 @@
                         @Html.DisplayFor(modelItem => item.Restaurante.Nome)
                     </td>
                     <td>
-                        @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "btn btn-xs text-warning fa fa-pencil" }) |
-                        @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "btn btn-xs text-info fa fa-info" }) |
-                        @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "btn btn-xs text-danger fa fa-trash" })
+                        @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "btn btn-xs text-warning fa fa-pencil" + ViewBag.Disabled }) |
+                        @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "btn btn-xs text-info fa fa-info" + ViewBag.Disabled }) |
+                        @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "btn btn-xs text-danger fa fa-trash" + ViewBag.Disabled })
                     </td>
                 </tr>
             }

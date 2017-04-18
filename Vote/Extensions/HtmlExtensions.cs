@@ -22,17 +22,16 @@ namespace Vote
             if (html.ViewContext.HttpContext.User.Identity is ClaimsIdentity)
             {
                 usernameAuthentication = (html.ViewContext.HttpContext.User.Identity as ClaimsIdentity).Claims.Where(c => c.Type == "name").Select(c => c.Value).First();
-                usuario = db.Funcionarios.Where(u => u.Username.Equals(usernameAuthentication, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                usuario = db.Funcionarios.FirstOrDefault(u => u.Username.Equals(usernameAuthentication, StringComparison.InvariantCultureIgnoreCase));
             }
             else
             {
                 usernameAuthentication = html.ViewContext.HttpContext.User.Identity.Name;
-                usuario = db.Funcionarios.Where(u => u.Username.Equals(usernameAuthentication, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                usuario = db.Funcionarios.FirstOrDefault(u => u.Username.Equals(usernameAuthentication, StringComparison.InvariantCultureIgnoreCase));
             }
             if (usuario == null)
             {
-                usuario = new Funcionario();
-                usuario.Username = usernameAuthentication;
+                usuario = new Funcionario {Username = usernameAuthentication};
             }
             return (usuario);
         }
