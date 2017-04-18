@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using Vote.DAO;
 
 namespace Vote.Controllers
@@ -11,6 +13,13 @@ namespace Vote.Controllers
     public class BaseController : Controller
     {
         internal VoteEF db = new VoteEF();
+        public DateTime DateTimeNow
+        {
+            get
+            {
+                return TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "E. South America Standard Time");
+            }
+        }
 
         public bool IsAuthenticated
         {

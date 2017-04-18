@@ -14,7 +14,7 @@ namespace Vote.Controllers
         {
             ViewBag.Title = "Vote!";
             
-            return View(new HomeViewModel() { VotosComputadosHoje = Vote.Roles.VoteRoles.VotosComputados(db,DateTime.Now), RestauranteVencedor = Vote.Roles.VoteRoles.ResultadoRestauranteVencedor(db,DateTime.Now) });
+            return View(new HomeViewModel() { VotosComputadosHoje = Vote.Roles.VoteRoles.VotosComputados(db,DateTimeNow), RestauranteVencedor = Vote.Roles.VoteRoles.ResultadoRestauranteVencedor(db, DateTimeNow) });
         }
 
         public ActionResult Votar()
