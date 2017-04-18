@@ -39,7 +39,7 @@ namespace Vote
 
         // OWIN auth middleware constants
         public const string ObjectIdElement = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
-        
+
         // API Scopes
         public const string ReadTasksScope = "https://dbservervote.onmicrosoft.com/tasks/read";
         public const string WriteTasksScope = "https://dbservervote.onmicrosoft.com/tasks/write";
@@ -62,7 +62,7 @@ namespace Vote
                     ClientId = ClientId,
                     RedirectUri = RedirectUri,
                     PostLogoutRedirectUri = RedirectUri,
-                    
+
                     Notifications = new OpenIdConnectAuthenticationNotifications
                     {
                         RedirectToIdentityProvider = OnRedirectToIdentityProvider,
@@ -104,6 +104,12 @@ namespace Vote
          */
         private Task OnAuthenticationFailed(AuthenticationFailedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)
         {
+            if (notification.Exception.Message.StartsWith("OICE_20004") ||
+                notification.Exception.Message.Contains("IDX10311"))
+            {
+                notification.SkipToNextMiddleware(); return Task.FromResult(0);
+            }
+
             notification.HandleResponse();
 
             // Handle the error code that Azure AD B2C throws when trying to reset a password from the login page 
