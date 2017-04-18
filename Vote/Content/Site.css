@@ -162,6 +162,10 @@ input[type="checkbox"].input-validation-error {
     margin-left: 10px;
 }
 
+.navbar-toggle {
+    color: rgb(42, 63, 143);
+}
+
 .navbar-brand {
     /*background: url('./images/logo.png') no-repeat;
     background-size: 130px 35px;*/
@@ -530,7 +534,7 @@ footer p.text-muted {
 }
 
 /*ajustes mobile*/
-@media (min-width: 810px) and (max-width: 1015px) {
+/*@media (min-width: 810px) and (max-width: 1015px) {
     .nome-usuario {
         display: none;
     }
@@ -565,7 +569,7 @@ footer p.text-muted {
         overflow: hidden;
         text-overflow: ellipsis;
     }
-}
+}*/
 
 .small-box {
     border-radius: 5px;
