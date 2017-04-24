@@ -307,7 +307,9 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -321,9 +323,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Votos\Create.cshtml" />
-    <Content Include="Views\Votos\Delete.cshtml" />
-    <Content Include="Views\Votos\Details.cshtml" />
-    <Content Include="Views\Votos\Edit.cshtml" />
     <Content Include="Views\Votos\Index.cshtml" />
     <Content Include="Views\Funcionarios\Create.cshtml" />
     <Content Include="Views\Funcionarios\Delete.cshtml" />

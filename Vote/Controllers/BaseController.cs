@@ -10,8 +10,10 @@ using Vote.DAO;
 
 namespace Vote.Controllers
 {
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
+        internal abstract void CarregarViewBag();
+
         internal VoteEF db = new VoteEF();
         public DateTime DateTimeNow
         {
@@ -40,12 +42,12 @@ namespace Vote.Controllers
                 if (HttpContext.User.Identity is ClaimsIdentity)
                 {
                     usernameAuthentication = (HttpContext.User.Identity as ClaimsIdentity).Claims.Where(c => c.Type == "name").Select(c => c.Value).First();
-                    usuario = db.Funcionarios.FirstOrDefault(u => u.Username.Equals(usernameAuthentication, StringComparison.InvariantCultureIgnoreCase));
+                    usuario = db.Funcionarios.FirstOrDefault(u => u.Ativo && u.Username.Equals(usernameAuthentication, StringComparison.InvariantCultureIgnoreCase));
                 }
                 else
                 {
                     usernameAuthentication = HttpContext.User.Identity.Name;
-                    usuario = db.Funcionarios.FirstOrDefault(u => u.Username.Equals(usernameAuthentication, StringComparison.InvariantCultureIgnoreCase));
+                    usuario = db.Funcionarios.FirstOrDefault(u => u.Ativo && u.Username.Equals(usernameAuthentication, StringComparison.InvariantCultureIgnoreCase));
                 }
                 if (usuario == null)
                 {
@@ -61,6 +63,15 @@ namespace Vote.Controllers
                 return false;
 
             return UsuarioAtual.Administrador;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

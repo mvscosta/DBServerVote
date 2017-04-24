@@ -9,6 +9,10 @@ namespace Vote.Controllers
 {
     public class AccountController : BaseController
     {
+        internal override void CarregarViewBag()
+        {
+     
+        }
         /*
          *  Called when requesting to sign up or sign in
          */

@@ -10,6 +10,10 @@ namespace Vote.Controllers
 {
     public class HomeController : BaseController
     {
+        internal override void CarregarViewBag()
+        {
+        }
+
         public ActionResult Index()
         {
             ViewBag.Title = "Vote!";
@@ -22,13 +26,13 @@ namespace Vote.Controllers
             return RedirectToAction("Create", "Votos");
         }
 
-        //[Authorize]
-        //public ActionResult Claims()
-        //{
-        //    Claim displayName = ClaimsPrincipal.Current.FindFirst(ClaimsPrincipal.Current.Identities.First().NameClaimType);
-        //    ViewBag.DisplayName = displayName != null ? displayName.Value : string.Empty;
-        //    return View();
-        //}
+        [Authorize]
+        public ActionResult Claims()
+        {
+            Claim displayName = ClaimsPrincipal.Current.FindFirst(ClaimsPrincipal.Current.Identities.First().NameClaimType);
+            ViewBag.DisplayName = displayName != null ? displayName.Value : string.Empty;
+            return View();
+        }
 
         public ActionResult Error(string message)
         {

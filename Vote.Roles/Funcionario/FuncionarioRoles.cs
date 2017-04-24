@@ -21,7 +21,7 @@ namespace Vote.Roles
             if (db == null)
                 db = new VoteEF();
 
-            var func = db.Funcionarios.Where(f=>f.Username == usernameFuncionario);
+            var func = db.Funcionarios.Where(f=> f.Ativo && f.Username == usernameFuncionario);
 
             if (!func.Any() || func.Count() > 1)
                 return null;

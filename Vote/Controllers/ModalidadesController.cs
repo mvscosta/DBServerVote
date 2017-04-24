@@ -13,12 +13,16 @@ namespace Vote.Controllers
     [Authorize]
     public class ModalidadesController : BaseController
     {
+        internal override void CarregarViewBag()
+        {
+            ViewBag.Disabled = UsuarioAdministrador() ? "" : " disabled";
+        }
 
         // GET: Modalidades
         public ActionResult Index()
         {
-            ViewBag.Disabled = UsuarioAdministrador() ? "" : " disabled";
-            return View(db.Modalidades.ToList());
+            CarregarViewBag();
+            return View(db.Modalidades.OrderBy(m=>m.Titulo).ToList());
         }
 
         // GET: Modalidades/Details/5
@@ -146,13 +150,5 @@ namespace Vote.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

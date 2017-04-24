@@ -12,12 +12,20 @@ namespace Vote.Controllers
 {
     public class RestaurantesController : BaseController
     {
+        internal override void CarregarViewBag()
+        {
+            ViewBag.Disabled = UsuarioAdministrador() ? "" : " disabled";
+            ViewBag.IdCategoria = new SelectList(db.Categorias, "Id", "Titulo");
+            ViewBag.IdModalidade = new SelectList(db.Modalidades, "Id", "Titulo");
+
+        }
+
         // GET: Restaurantes
         public ActionResult Index()
         {
-            ViewBag.Disabled = UsuarioAdministrador() ? "" : " disabled";
+            CarregarViewBag();
             var restaurantes = db.Restaurantes.Include(r => r.Categoria).Include(r => r.Modalidade);
-            return View(restaurantes.ToList());
+            return View(restaurantes.OrderBy(r=>r.Nome).ToList());
         }
 
         // GET: Restaurantes/Details/5
@@ -38,8 +46,7 @@ namespace Vote.Controllers
         // GET: Restaurantes/Create
         public ActionResult Create()
         {
-            ViewBag.IdCategoria = new SelectList(db.Categorias, "Id", "Titulo");
-            ViewBag.IdModalidade = new SelectList(db.Modalidades, "Id", "Titulo");
+            CarregarViewBag();
             if (!UsuarioAdministrador())
             {
                 ModelState.AddModelError("", "Usuário não possui permissão.");
@@ -55,8 +62,7 @@ namespace Vote.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,IdCategoria,IdModalidade,DistanciaMedia,Endereco,Nome,ValorMedio,Ativo")] Restaurante restaurante)
         {
-            ViewBag.IdCategoria = new SelectList(db.Categorias, "Id", "Titulo");
-            ViewBag.IdModalidade = new SelectList(db.Modalidades, "Id", "Titulo");
+            CarregarViewBag();
             if (!UsuarioAdministrador())
             {
                 ModelState.AddModelError("", "Usuário não possui permissão.");
@@ -84,8 +90,7 @@ namespace Vote.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdCategoria = new SelectList(db.Categorias, "Id", "Titulo");
-            ViewBag.IdModalidade = new SelectList(db.Modalidades, "Id", "Titulo");
+            CarregarViewBag();
             if (!UsuarioAdministrador())
             {
                 ModelState.AddModelError("", "Usuário não possui permissão.");
@@ -101,8 +106,7 @@ namespace Vote.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,IdCategoria,IdModalidade,DistanciaMedia,Endereco,Nome,ValorMedio,Ativo")] Restaurante restaurante)
         {
-            ViewBag.IdCategoria = new SelectList(db.Categorias, "Id", "Titulo");
-            ViewBag.IdModalidade = new SelectList(db.Modalidades, "Id", "Titulo");
+            CarregarViewBag();
             if (!UsuarioAdministrador())
             {
                 ModelState.AddModelError("", "Usuário não possui permissão.");
@@ -148,18 +152,10 @@ namespace Vote.Controllers
                 ModelState.AddModelError("", "Usuário não possui permissão.");
                 return View(restaurante);
             }
-            db.Restaurantes.Remove(restaurante);
+            restaurante.Ativo = false;
+            db.Entry(restaurante).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

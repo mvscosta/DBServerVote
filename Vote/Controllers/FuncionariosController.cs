@@ -13,12 +13,16 @@ namespace Vote.Controllers
     [Authorize]
     public class FuncionariosController : BaseController
     {
-     
+        internal override void CarregarViewBag()
+        {
+            ViewBag.Disabled = UsuarioAdministrador() ? "" : " disabled";
+        }
+
         // GET: Funcionarios
         public ActionResult Index()
         {
-            ViewBag.Disabled = UsuarioAdministrador() ? "" : " disabled";
-            return View(db.Funcionarios.ToList());
+            CarregarViewBag();
+            return View(db.Funcionarios.OrderBy(f=>f.Nome).ToList());
         }
 
         // GET: Funcionarios/Details/5
@@ -141,18 +145,10 @@ namespace Vote.Controllers
                 ModelState.AddModelError("", "Usuário não possui permissão.");
                 return View(funcionario);
             }
-            db.Funcionarios.Remove(funcionario);
+            funcionario.Ativo = false;
+            db.Entry(funcionario).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
