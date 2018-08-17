@@ -165,7 +165,7 @@
           <NavigationProperty Name="Categoria" Relationship="VoteModel.FK_Restaurantes_Categorias" FromRole="Restaurante" ToRole="Categoria" />
           <NavigationProperty Name="Modalidade" Relationship="VoteModel.FK_Restaurantes_Modalidades" FromRole="Restaurante" ToRole="Modalidade" />
           <NavigationProperty Name="Votos" Relationship="VoteModel.FK_Votos_Restaurantes" FromRole="Restaurante" ToRole="Voto" />
-          <Property Name="Ativo" Type="Boolean" Nullable="false" />
+          <Property Name="Ativo" Type="Boolean" Nullable="false" DefaultValue="TRUE" />
         </EntityType>
         <EntityType Name="Categoria">
           <Key>
