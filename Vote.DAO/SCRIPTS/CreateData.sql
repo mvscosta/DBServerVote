@@ -62,7 +62,7 @@ GO
 SET IDENTITY_INSERT [dbo].[Restaurantes] ON;  
 GO
 INSERT INTO [dbo].[Restaurantes] ([Id], [IdCategoria], [IdModalidade], [DistanciaMedia], [Endereco], [Nome],[ValorMedio])
-VALUES(1, 1,1,1.0,'Bento Gonçalves 7888', 'Shushi Bom',60.0)
+VALUES(1, 1,1,1.0,'Bento Gonçalves 7888', 'Sushi Bom',60.0)
 ,(2, 3,3,0.5,'Bento Gonçalves 7000', 'CASA DA VÓ',35.0)
 ,(3, 3,3,0.3,'Bento Gonçalves 6700', 'SILVA BAR',20.0)
 GO

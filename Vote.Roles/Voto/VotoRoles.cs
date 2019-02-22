@@ -51,9 +51,10 @@ namespace Vote.Roles
             var restaurante = db.Restaurantes.Find(idRestaurante);
             if (restaurante == null)
                 return "Restaurante inválido!";
-
-            if (!ValidaRestauranteVotacaoSemanal(db, idRestaurante, dataHoraVotacao.AddDays(-1)))
-                return "Este restaurante já foi votado esta semana!";
+            
+// Validação para não repetir restaurante na semana não será utilizada em prod
+//            if (!ValidaRestauranteVotacaoSemanal(db, idRestaurante, dataHoraVotacao.AddDays(-1)))
+//                return "Este restaurante já foi votado esta semana!";
 
             db.Votos.Add(new Voto()
             {

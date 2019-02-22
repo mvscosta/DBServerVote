@@ -62,7 +62,8 @@ CREATE TABLE [dbo].[Restaurantes] (
     [DistanciaMedia] decimal(8,2)  NULL,
     [Endereco] nvarchar(500)  NULL,
     [Nome] nvarchar(500)  NOT NULL,
-    [ValorMedio] decimal(18,9)  NULL
+    [ValorMedio] decimal(18,9)  NULL,
+	[Ativo] bit NOT NULL DEFAULT(1)
 );
 GO
 
