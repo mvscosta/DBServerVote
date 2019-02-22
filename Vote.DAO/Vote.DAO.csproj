@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Vote.DAO</RootNamespace>
     <AssemblyName>Vote.DAO</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,17 +31,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,16 +59,28 @@
     <Compile Include="Categoria.cs">
       <DependentUpon>VoteEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\BaseDataAccess.cs" />
+    <Compile Include="DataAccess\CategoriaDataAccess.cs" />
+    <Compile Include="DataAccess\FuncionarioDataAccess.cs" />
+    <Compile Include="DataAccess\ModalidadeDataAccess.cs" />
+    <Compile Include="DataAccess\RestauranteDataAccess.cs" />
+    <Compile Include="DataAccess\VotoDataAccess.cs" />
     <Compile Include="Funcionario.cs">
       <DependentUpon>VoteEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Modalidade.cs">
       <DependentUpon>VoteEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Voto.cs" />
+    <Compile Include="Model\Restaurante.cs" />
+    <Compile Include="Model\Funcionario.cs" />
+    <Compile Include="Model\Modalidade.cs" />
+    <Compile Include="Model\Categoria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Restaurante.cs">
       <DependentUpon>VoteEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\VoteContext.cs" />
     <Compile Include="VoteEF.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -110,6 +129,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vote.Core\Vote.Core.csproj">
+      <Project>{CE32C36D-A72D-4DB1-999B-81BF1599F177}</Project>
+      <Name>Vote.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
