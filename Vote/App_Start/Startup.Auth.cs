@@ -17,6 +17,7 @@ using Microsoft.Identity.Client;
 using System.Net.Http;
 using System.Web.Helpers;
 using System.IdentityModel.Claims;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Vote
 {
@@ -84,7 +85,7 @@ namespace Vote
          *  On each call to Azure AD B2C, check if a policy (e.g. the profile edit or password reset policy) has been specified in the OWIN context.
          *  If so, use that policy when making the call. Also, don't request a code (since it won't be needed).
          */
-        private Task OnRedirectToIdentityProvider(RedirectToIdentityProviderNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)
+        private Task OnRedirectToIdentityProvider(RedirectToIdentityProviderNotification<Microsoft.IdentityModel.Protocols.OpenIdConnect.OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)
         {
             var policy = notification.OwinContext.Get<string>("Policy");
 
@@ -102,7 +103,7 @@ namespace Vote
         /*
          * Catch any failures received by the authentication middleware and handle appropriately
          */
-        private Task OnAuthenticationFailed(AuthenticationFailedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)
+        private Task OnAuthenticationFailed(AuthenticationFailedNotification<Microsoft.IdentityModel.Protocols.OpenIdConnect.OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)
         {
             if (notification.Exception.Message.StartsWith("OICE_20004") ||
                 notification.Exception.Message.Contains("IDX10311"))
@@ -146,9 +147,10 @@ namespace Vote
 
             // Exchange the code for a token. Make sure to specify the necessary scopes
             ClientCredential cred = new ClientCredential(ClientSecret);
-            ConfidentialClientApplication app = new ConfidentialClientApplication(authority, Startup.ClientId,
-                                                    RedirectUri, cred, new NaiveSessionCache(userObjectId, httpContext));
-            var authResult = await app.AcquireTokenByAuthorizationCodeAsync(new string[] { ReadTasksScope, WriteTasksScope }, code, DefaultPolicy);
+            TokenCache userTokenCache = new MSALSessionCache(userObjectId, httpContext).GetMsalCacheInstance();
+            ConfidentialClientApplication app = new ConfidentialClientApplication(Startup.ClientId, authority, RedirectUri,
+                                                    cred, userTokenCache, null);
+            var authResult = await app.AcquireTokenByAuthorizationCodeAsync(code, new string[] { ReadTasksScope, WriteTasksScope });
         }
     }
 }
