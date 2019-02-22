@@ -18,7 +18,7 @@ namespace Vote.Specs
         private int IdRestaurante { get; set; }
 
         [Given(@"Funcionario (.*) esta votando em (.*)")]
-        public void GivenFuncionarioestavotandoem(int idFunc, int idRest, Table table)
+        public void GivenFuncionarioEstaVotandoEm(int idFunc, int idRest)
         {
             if (RestauranteRoles.ValidaRestaurante(_db, idRest))
                 IdRestaurante = idRest;
@@ -27,7 +27,7 @@ namespace Vote.Specs
         }
 
         [When(@"Votar funcionario (.*) restaurante (.*) no dia ""(.*)""")]
-        public void Votarfuncionariorestaurantenodia(int idFunc, int idRest, string dataVoto)
+        public void WhenVotarFuncionarioRestauranteNoDia(int idFunc, int idRest, string dataVoto)
         {
             _db.Database.BeginTransaction();
             var dataVotacao = DateTime.ParseExact(dataVoto, "dd/MM/yyyy HH:mm:ss", new CultureInfo("pt-BR"));
@@ -40,6 +40,5 @@ namespace Vote.Specs
         {
             Assert.AreEqual(resultadoEsperado, Result);
         }
-
     }
 }

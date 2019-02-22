@@ -88,9 +88,6 @@
     <None Include="SpecRunTestProfile.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="SpecRunTestProfile_2011_09.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Votacao.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Votacao.feature.cs</LastGenOutput>
