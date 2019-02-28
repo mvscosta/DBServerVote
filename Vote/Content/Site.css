@@ -6,38 +6,46 @@
         color: rgb(42, 63, 143);
     }
 
-.nav > li > a:hover, .nav > li > a:focus {
-    text-decoration: none;
-    background-color: rgb(78, 167, 243);
+.navbar-nav a {
+    -webkit-transition: background-color .3s !important;
+    transition: background-color .3s !important;
+    color: rgb(42, 63, 143);
+    font-size: 1.25em;
+}
+
+    .navbar-nav a:hover {
+        -webkit-transition: background-color 0s !important;
+        transition: background-color 0s !important;
+        background-color: #CCCCCC;
+        font-size: 1.35em;
+    }
+
+.navbar-nav .nav-item .nav-link {
+    -webkit-transition: background-color .3s !important;
+    transition: background-color .3s !important;
+    color: rgb(42, 63, 143);
+    font-size: 1.25em;
+}
+
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-item:hover .nav-link {
+    -webkit-transition: background-color 0s !important;
+    transition: background-color 0s !important;
+    background-color: #CCCCCC;
+    font-size: 1.35em;
 }
 
 body {
-    padding-top: 60px;
+    padding-top: 15px;
     padding-bottom: 20px;
+    font-size: 1.3em;
 }
 
-@media (min-width: 260px) {
-    body {
-        background-position-x: 28%;
-    }
-}
-
-@media (min-width: 810px) {
-    body {
-        background-position-x: 30%;
-    }
-}
-
-@media (min-width: 1015px) {
-    body {
-        background-position-x: 36%;
-    }
-}
-
-@media (min-width: 1200px) {
-    body {
-        background-position-x: 50%;
-    }
+h3 {
+    color: rgb(42, 63, 143);
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 0px;
 }
 
 #modalLoading .modal-dialog {
@@ -176,6 +184,7 @@ input[type="checkbox"].input-validation-error {
 }
 
 .navbar-right {
+    display: block;
     margin-right: 0px !important;
     background-color: rgb(78, 167, 243);
 }
@@ -317,6 +326,10 @@ iframe iframe .prtgmapfooter {
     width: 250px;
 }
 
+.navlink-right {
+    width: 250px;
+}
+
 .nome-usuario {
     display: block;
     max-width: 230px;
@@ -324,10 +337,6 @@ iframe iframe .prtgmapfooter {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.navbar-nav > li > a {
-    height: 50px;
 }
 
 .dropdown-menu .divider {
@@ -410,16 +419,6 @@ footer p.text-muted {
     border: 0;
 }
 
-.navbar-nav a {
-    -webkit-transition: background-color .3s !important;
-    transition: background-color .3s !important;
-}
-
-    .navbar-nav a:hover {
-        -webkit-transition: background-color 0s !important;
-        transition: background-color 0s !important;
-    }
-    
 /*ajuste menu terceiro nivel*/
 .dropdown-submenu {
     position: relative;
