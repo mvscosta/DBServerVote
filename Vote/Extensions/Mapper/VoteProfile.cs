@@ -13,7 +13,9 @@ namespace Vote.Extensions.Mapper
         public VoteProfile()
         {
             CreateMap<Categoria, CategoriaViewModel>().ReverseMap();
-
+            CreateMap<Modalidade, ModalidadeViewModel>().ReverseMap();
+            CreateMap<Voto, VotoViewModel>().ReverseMap();
+            CreateMap<Restaurante, RestauranteViewModel>().ReverseMap();
         }
 
     }

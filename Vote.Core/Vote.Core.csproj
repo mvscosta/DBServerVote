@@ -49,6 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\DAO\IBaseDataAccess.cs" />
+    <Compile Include="Interfaces\DAO\IFuncionarioDataAccess.cs" />
+    <Compile Include="Interfaces\DAO\IVotoDataAccess.cs" />
+    <Compile Include="Interfaces\DAO\IRestauranteDataAccess.cs" />
+    <Compile Include="Interfaces\DAO\IModalidadeDataAccess.cs" />
     <Compile Include="Interfaces\DAO\ICategoriaDataAccess.cs" />
     <Compile Include="Interfaces\DAO\IVoteContext.cs" />
     <Compile Include="Interfaces\Model\IBaseModel.cs" />

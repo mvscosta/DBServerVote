@@ -1,4 +1,4 @@
-﻿@model Vote.DAO.Modalidade
+﻿@model Vote.ViewModels.ModalidadeViewModel
 
 @{
     ViewBag.Title = "Deletar";
@@ -30,7 +30,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

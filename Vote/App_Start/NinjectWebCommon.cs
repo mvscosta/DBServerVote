@@ -69,6 +69,10 @@ namespace Vote.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<ICategoriaDataAccess>().To<CategoriaDataAccess>();
+            kernel.Bind<IFuncionarioDataAccess>().To<FuncionarioDataAccess>();
+            kernel.Bind<IModalidadeDataAccess>().To<ModalidadeDataAccess>();
+            kernel.Bind<IRestauranteDataAccess>().To<RestauranteDataAccess>();
+            kernel.Bind<IVotoDataAccess>().To<VotoDataAccess>();
         }        
     }
 }

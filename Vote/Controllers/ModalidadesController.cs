@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,13 +7,23 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Vote.Core.Interfaces.DAO;
+using Vote.Core.Interfaces.Model;
 using Vote.DAO;
+using Vote.ViewModels;
 
 namespace Vote.Controllers
 {
     [Authorize]
     public class ModalidadesController : BaseController
     {
+        private IModalidadeDataAccess _modalidadeDataAccess { get; set; }
+
+        public ModalidadesController(IModalidadeDataAccess modalidadeDataAccess)
+        {
+            this._modalidadeDataAccess = modalidadeDataAccess;
+        }
+
         internal override void CarregarViewBag()
         {
             ViewBag.Disabled = UsuarioAdministrador() ? "" : " disabled";
@@ -22,22 +33,24 @@ namespace Vote.Controllers
         public ActionResult Index()
         {
             CarregarViewBag();
-            return View(db.Modalidades.OrderBy(m=>m.Titulo).ToList());
+            return View(this._modalidadeDataAccess.All.OrderBy(m=>m.Titulo).ToList());
         }
 
         // GET: Modalidades/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (!id.HasValue)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Modalidade modalidade = db.Modalidades.Find(id);
+
+            IModalidade modalidade = this._modalidadeDataAccess.Find(id.Value);
+
             if (modalidade == null)
             {
                 return HttpNotFound();
             }
-            return View(modalidade);
+            return View(Mapper.Map<ModalidadeViewModel>(modalidade));
         }
 
         // GET: Modalidades/Create
@@ -56,31 +69,32 @@ namespace Vote.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Descricao,Titulo")] Modalidade modalidade)
+        public ActionResult Create(ModalidadeViewModel modalidade)
         {
             if (!UsuarioAdministrador())
             {
                 ModelState.AddModelError("", "Usuário não possui permissão.");
-                return View(modalidade);
+                return View(Mapper.Map<ModalidadeViewModel>(modalidade));
             }
             if (ModelState.IsValid)
             {
-                db.Modalidades.Add(modalidade);
-                db.SaveChanges();
+                this._modalidadeDataAccess.Add(Mapper.Map<Modalidade>(modalidade));
                 return RedirectToAction("Index");
             }
 
-            return View(modalidade);
+            return View(Mapper.Map<ModalidadeViewModel>(modalidade));
         }
 
         // GET: Modalidades/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (!id.HasValue)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Modalidade modalidade = db.Modalidades.Find(id);
+
+            IModalidade modalidade = this._modalidadeDataAccess.Find(id.Value);
+
             if (modalidade == null)
             {
                 return HttpNotFound();
@@ -88,9 +102,9 @@ namespace Vote.Controllers
             if (!UsuarioAdministrador())
             {
                 ModelState.AddModelError("", "Usuário não possui permissão.");
-                return View(modalidade);
+                return View(Mapper.Map<ModalidadeViewModel>(modalidade));
             }
-            return View(modalidade);
+            return View(Mapper.Map<ModalidadeViewModel>(modalidade));
         }
 
         // POST: Modalidades/Edit/5
@@ -98,30 +112,32 @@ namespace Vote.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Descricao,Titulo")] Modalidade modalidade)
+        public ActionResult Edit(ModalidadeViewModel modalidade)
         {
             if (!UsuarioAdministrador())
             {
                 ModelState.AddModelError("", "Usuário não possui permissão.");
-                return View(modalidade);
+                return View(Mapper.Map<ModalidadeViewModel>(modalidade));
             }
             if (ModelState.IsValid)
             {
-                db.Entry(modalidade).State = EntityState.Modified;
-                db.SaveChanges();
+                this._modalidadeDataAccess.Edit(Mapper.Map<Modalidade>(modalidade));
+
                 return RedirectToAction("Index");
             }
-            return View(modalidade);
+            return View(Mapper.Map<ModalidadeViewModel>(modalidade));
         }
 
         // GET: Modalidades/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (!id.HasValue)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Modalidade modalidade = db.Modalidades.Find(id);
+
+            IModalidade modalidade = this._modalidadeDataAccess.Find(id.Value);
+
             if (modalidade == null)
             {
                 return HttpNotFound();
@@ -129,9 +145,9 @@ namespace Vote.Controllers
             if (!UsuarioAdministrador())
             {
                 ModelState.AddModelError("", "Usuário não possui permissão.");
-                return View(modalidade);
+                return View(Mapper.Map<ModalidadeViewModel>(modalidade));
             }
-            return View(modalidade);
+            return View(Mapper.Map<ModalidadeViewModel>(modalidade));
         }
 
         // POST: Modalidades/Delete/5
@@ -139,14 +155,15 @@ namespace Vote.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Modalidade modalidade = db.Modalidades.Find(id);
+            IModalidade modalidade = this._modalidadeDataAccess.Find(id);
+
             if (!UsuarioAdministrador())
             {
                 ModelState.AddModelError("", "Usuário não possui permissão.");
-                return View(modalidade);
+                return View(Mapper.Map<ModalidadeViewModel>(modalidade));
             }
-            db.Modalidades.Remove(modalidade);
-            db.SaveChanges();
+
+            this._modalidadeDataAccess.Remove(modalidade);
             return RedirectToAction("Index");
         }
 
