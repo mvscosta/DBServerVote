@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿using System;
+using Microsoft.Owin;
 using Owin;
 
 
@@ -11,6 +12,7 @@ namespace Vote
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            Console.WriteLine("teste");
         }
     }
 }
