@@ -77,10 +77,10 @@
     <Compile Include="Model\Modalidade.cs" />
     <Compile Include="Model\Categoria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\VoteContext.cs" />
     <Compile Include="Restaurante.cs">
       <DependentUpon>VoteEF.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\VoteContext.cs" />
     <Compile Include="VoteEF.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

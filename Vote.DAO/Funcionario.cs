@@ -17,6 +17,7 @@ namespace Vote.DAO
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Funcionario()
         {
+            this.Ativo = true;
             this.Votos = new HashSet<Voto>();
         }
     
