@@ -93,9 +93,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
-    <Compile Include="Roles\Employee.cs" />
-    <Compile Include="Roles\Restaurant.cs" />
-    <Compile Include="Roles\Vote.cs" />
     <Compile Include="DataAccess\CategoriaDataAccessTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +120,9 @@
       <Project>{AA0A8CA4-65EE-4815-A288-0D4A5C811AC8}</Project>
       <Name>Vote</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Roles\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
