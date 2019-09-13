@@ -41,25 +41,25 @@ namespace Vote.Controllers
 
                 if (HttpContext.User.Identity is ClaimsIdentity)
                 {
-                    usernameAuthentication = (HttpContext.User.Identity as ClaimsIdentity).Claims.Where(c => c.Type == "name").Select(c => c.Value).First();
+                    usernameAuthentication = (HttpContext.User.Identity as ClaimsIdentity).Claims.Where(c => c.Type == "emails").Select(c => c.Value).First();
                     usuario = db.Funcionarios.FirstOrDefault(u => u.Ativo && u.Username.Equals(usernameAuthentication, StringComparison.InvariantCultureIgnoreCase));
                 }
                 else
                 {
                     usernameAuthentication = HttpContext.User.Identity.Name;
-                    usuario = db.Funcionarios.FirstOrDefault(u => u.Ativo && u.Username.Equals(usernameAuthentication, StringComparison.InvariantCultureIgnoreCase));
+                    usuario = db.Funcionarios.FirstOrDefault(u => u.Ativo && u.Nome.Equals(usernameAuthentication, StringComparison.InvariantCultureIgnoreCase));
                 }
                 if (usuario == null)
                 {
-                    usuario = new Funcionario {Username = usernameAuthentication};
+                    usuario = new Funcionario { Username = usernameAuthentication };
                 }
-                return (usuario);
+                return usuario;
             }
         }
 
         public bool UsuarioAdministrador()
         {
-            if (UsuarioAtual== null)
+            if (UsuarioAtual == null)
                 return false;
 
             return UsuarioAtual.Administrador;

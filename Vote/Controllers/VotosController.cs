@@ -44,7 +44,7 @@ namespace Vote.Controllers
         {
             if (ModelState.IsValid)
             {
-                var funcionario = FuncionarioRoles.ValidaFuncionario(db, UsuarioAtual.Nome);
+                var funcionario = FuncionarioRoles.ValidaFuncionario(db, UsuarioAtual.Username);
                 string resultado = VoteRoles.Votar(db, funcionario.Id, voto.IdRestaurante, DateTimeNow);
 
                 ModelState.AddModelError("",resultado);

@@ -86,7 +86,7 @@ GO
 -- Creating table 'Funcionarios'
 CREATE TABLE [dbo].[Funcionarios] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Ativo] nvarchar(max)  NOT NULL,
+    [Ativo] bit  NOT NULL,
     [Nome] nvarchar(max)  NOT NULL,
     [Username] nvarchar(max)  NOT NULL,
     [Administrador] bit  NOT NULL
